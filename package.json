@@ -1,6 +1,7 @@
 {
-  "name": "weather-basic-server",
+  "name": "StageTwo",
   "version": "1.0.0",
+  "author": "Heccubernny",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,7 +19,6 @@
   },
   "dependencies": {
     "@vercel/postgres": "^0.9.0",
-    "axios": "^1.7.2",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "chai": "^5.1.1",
@@ -35,7 +35,6 @@
     "list_end_points": "^2.0.6",
     "metadata": "^0.1.0",
     "mocha": "^10.6.0",
-    "mongoose": "^8.4.4",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
@@ -49,7 +48,6 @@
     "typeorm": "^0.3.20"
   },
   "devDependencies": {
-    "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/chai": "^4.3.16",
     "@types/cookie-parser": "^1.4.7",
@@ -58,7 +56,6 @@
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/mocha": "^10.0.7",
-    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.9",
     "@types/nodemailer": "^6.4.15",

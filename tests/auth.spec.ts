@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import request from 'supertest';
 import app from '../src';
 import { AppDataSource } from '../src/data-source';
 import { Organisation } from '../src/entities/Organisation';
