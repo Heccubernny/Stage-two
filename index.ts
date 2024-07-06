@@ -1,3 +1,4 @@
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
@@ -22,7 +23,7 @@ app.get('/', async (req, res) => {
 AppDataSource.initialize()
   .then(() => {
     console.log('Connected to the database');
-
+    app.use(cors());
     app.use('/auth', authRoutes);
     app.use('/api/organisations', organisationRoutes);
     app.use('/api/users', userRoutes);
