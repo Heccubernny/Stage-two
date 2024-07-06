@@ -1,12 +1,13 @@
 import bcrypt from 'bcryptjs';
 import { validate } from 'class-validator';
+import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
 import { AppDataSource } from '../data-source';
 import { Organisation } from '../entities/Organisation';
 import { User } from '../entities/User';
 import { CustomValidationException } from '../utils/common/exception';
 import { ERROR_MESSAGE } from '../utils/constant';
-
+dotenv.config();
 type RegistrationType = {
   firstName: string;
   lastName: string;

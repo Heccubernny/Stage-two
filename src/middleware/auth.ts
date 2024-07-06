@@ -1,8 +1,9 @@
+import dotenv from 'dotenv';
 import { NextFunction, Response } from 'express';
 import HttpStatusCodes from 'http-status-codes';
 import jwt from 'jsonwebtoken';
 import { CustomRequest } from '../interfaces/authInterface';
-
+dotenv.config();
 class AuthMiddleware {
   static authenticateJWT(
     req: CustomRequest,
