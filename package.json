@@ -1,16 +1,12 @@
 {
-  "name": "StageTwo",
+  "name": "stagetwo",
   "version": "1.0.0",
   "author": "Heccubernny",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "rimraf dist && tsc",
-    "add-build": "git add dist",
     "dev": "nodemon -x ts-node ./src/index.ts",
     "start": "nodemon ./dist/index.js",
-    "prod": "npm run build && npm run start",
-    "ts.check": "tsc --project tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -66,10 +62,5 @@
     "ts-jest": "^29.1.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
-  },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-  ]
+  }
 }
