@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 import express from 'express';
 import helmet from 'helmet';
 import 'reflect-metadata';
-import { AppDataSource } from './data-source';
-import authRoutes from './routes/auth';
-import organisationRoutes from './routes/organisation';
-import userRoutes from './routes/user';
+import { AppDataSource } from './src/data-source';
+import authRoutes from './src/routes/auth';
+import organisationRoutes from './src/routes/organisation';
+import userRoutes from './src/routes/user';
 dotenv.config();
 
 const API_KEY = process.env.HNG_API_KEY;

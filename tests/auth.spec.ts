@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import app from '../src';
+import app from '..';
 import { AppDataSource } from '../src/data-source';
 import { Organisation } from '../src/entities/Organisation';
 import { cleanupDatabase } from '../src/utils/test';
