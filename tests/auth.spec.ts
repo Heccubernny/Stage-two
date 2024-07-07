@@ -4,28 +4,28 @@ import request from 'supertest';
 import app from '../app';
 import { AppDataSource } from '../src/data_source';
 import { Organisation } from '../src/entities/Organisation';
-import { cleanupDatabase, initializeTestDataSource } from '../src/utils/test';
 
 const isTokenExpired = (token: string) => {
   const { exp } = jwt.decode(token) as { exp: number };
   return exp * 1000 < Date.now();
 };
 
-describe('Authentication Endpoints', async () => {
+describe('Authentication Endpoints', () => {
   let server;
   let accessToken;
   beforeAll(async () => {
+    await AppDataSource.initialize();
+
     server = await app;
+    // await initializeTestDataSource();
 
     const res = await request(server).post('/auth/register').send({});
+    // console.log(res.body);
     accessToken = res.body.data.accessToken;
   });
 
-  await initializeTestDataSource();
-
   afterAll(async () => {
-    await cleanupDatabase();
-    // await AppDataSource.destroy();
+    await AppDataSource.destroy();
   });
 
   describe('POST /auth/register', () => {
@@ -33,7 +33,7 @@ describe('Authentication Endpoints', async () => {
       const res = await request(app).post('/auth/register').send({
         firstName: 'John',
         lastName: 'Doe',
-        email: 'john.doe@mail.com',
+        email: 'john.doe212@mail.com',
         password: 'password123',
         phone: '1234567890',
       });
@@ -57,11 +57,11 @@ describe('Authentication Endpoints', async () => {
     it('should fail if required fields are missing', async () => {
       const res = await request(app).post('/auth/register').send({
         firstName: 'John',
-        email: 'john.doe@mail.com',
+        email: 'john.doe212@mail.com',
         password: 'password123',
       });
 
-      expect(res.status).toBe(422);
+      expect(res.statusCode).toBe(422);
       expect(res.body.errors).toEqual(
         expect.arrayContaining([
           expect.objectContaining({
@@ -76,7 +76,7 @@ describe('Authentication Endpoints', async () => {
       await request(app).post('/auth/register').send({
         firstName: 'Jane',
         lastName: 'Doe',
-        email: 'jane.doe@mail.com',
+        email: 'jane.doe212@mail.com',
         password: 'password123',
         phone: '1234567890',
       });
@@ -84,7 +84,7 @@ describe('Authentication Endpoints', async () => {
       const res = await request(app).post('/auth/register').send({
         firstName: 'John',
         lastName: 'Doe',
-        email: 'jane.doe@mail.com',
+        email: 'jane.doe212@mail.com',
         password: 'password123',
         phone: '0987654321',
       });
@@ -106,13 +106,13 @@ describe('Authentication Endpoints', async () => {
       await request(app).post('/auth/register').send({
         firstName: 'Alice',
         lastName: 'Smith',
-        email: 'alice.smith@mail.com',
+        email: 'alice.smith1@mail.com',
         password: 'password123',
         phone: '1234567890',
       });
 
       const res = await request(app).post('/auth/login').send({
-        email: 'alice.smith@mail.com',
+        email: 'alice.smith1@mail.com',
         password: 'password123',
       });
 
@@ -120,6 +120,7 @@ describe('Authentication Endpoints', async () => {
       expect(res.body.status).toBe('success');
       expect(res.body.data.user.email).toBe('alice.smith@mail.com');
       expect(res.body.data).toHaveProperty('accessToken');
+      // check if token generation expired
       expect(isTokenExpired(res.body.data.accessToken)).toBe(false);
     });
 
@@ -144,7 +145,7 @@ describe('Organisation Access', () => {
     const res = await request(app).post('/auth/register').send({
       firstName: 'Bob',
       lastName: 'Builder',
-      email: 'bob.builder@mail.com',
+      email: 'bob.builder12@mail.com',
       password: 'password123',
       phone: '1234567890',
     });
@@ -157,7 +158,7 @@ describe('Organisation Access', () => {
     const res2 = await request(app).post('/auth/register').send({
       firstName: 'Jane',
       lastName: 'Smith',
-      email: 'jane.smith@mail.com',
+      email: 'jane.smith212@mail.com',
       password: 'password123',
       phone: '1234567890',
     });
