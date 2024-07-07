@@ -65,14 +65,14 @@ export class AuthService {
     organisation.users = [user];
     await organisationRespository.save(organisation);
 
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       { userId: user.userId },
       process.env.HNG_JWT_SECRET!,
       { expiresIn: process.env.EXPIRES_IN }
     );
 
     return {
-      token,
+      accessToken,
       user: {
         userId: user.userId,
         firstName: user.firstName,
@@ -96,7 +96,7 @@ export class AuthService {
       throw new Error(ERROR_MESSAGE.AUTH.LOGIN_ERROR);
     }
 
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       { userId: user.userId },
       process.env.HNG_JWT_SECRET!,
       {
@@ -105,7 +105,7 @@ export class AuthService {
     );
 
     return {
-      token,
+      accessToken,
       user: {
         userId: user.userId,
         firstName: user.firstName,
