@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import request from 'supertest';
 import app from '../app';
-import { AppDataSource } from '../src/data_source';
+import { AppDataSource } from '../data_source';
 describe('User Registration', () => {
   beforeAll(async () => {
     await AppDataSource.initialize();

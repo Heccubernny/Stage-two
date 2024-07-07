@@ -2,8 +2,8 @@ import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 import request from 'supertest';
 import app from '../app';
-import { AppDataSource } from '../src/data_source';
-import { Organisation } from '../src/entities/Organisation';
+import { AppDataSource } from '../data_source';
+import { Organisation } from '../entities/Organisation';
 
 const isTokenExpired = (token: string) => {
   const { exp } = jwt.decode(token) as { exp: number };

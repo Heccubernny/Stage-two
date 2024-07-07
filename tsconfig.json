@@ -25,6 +25,14 @@
         "src/**/*",
         "app.ts",
         "index.ts",
+        "utils",
+        "tests/services",
+        "tests/routes",
+        "middleware",
+        "tests/interfaces",
+        "tests/entities",
+        "tests/controllers",
+        "data_source.ts",
     ],
     "exclude": [
         "node_modules"
