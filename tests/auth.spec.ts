@@ -1,15 +1,17 @@
+import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import jwt from 'jsonwebtoken';
-import app from '..';
-import { AppDataSource } from '../src/data-source';
+import request from 'supertest';
+import app from '../app';
+import { AppDataSource } from '../src/data_source';
 import { Organisation } from '../src/entities/Organisation';
-import { cleanupDatabase } from '../src/utils/test';
+import { cleanupDatabase, initializeTestDataSource } from '../src/utils/test';
 
 const isTokenExpired = (token: string) => {
   const { exp } = jwt.decode(token) as { exp: number };
   return exp * 1000 < Date.now();
 };
 
-describe('Authentication Endpoints', () => {
+describe('Authentication Endpoints', async () => {
   let server;
   let accessToken;
   beforeAll(async () => {
@@ -19,9 +21,11 @@ describe('Authentication Endpoints', () => {
     accessToken = res.body.data.accessToken;
   });
 
+  await initializeTestDataSource();
+
   afterAll(async () => {
     await cleanupDatabase();
-    await AppDataSource.destroy();
+    // await AppDataSource.destroy();
   });
 
   describe('POST /auth/register', () => {

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import HttpStatusCodes from 'http-status-codes';
+import { RegisterResponse } from '../interfaces/registerInterface';
 import { AuthService } from '../services/authService';
 import { CustomValidationException } from '../utils/common/exception';
 import {
@@ -8,9 +9,8 @@ import {
   SUCCESS_RESPONSE_CONSTANT,
 } from '../utils/constant';
 import { ResponseHandler } from '../utils/response';
-
 export class AuthController {
-  static async register(req: Request, res: Response) {
+  static async register(req: Request, res: Response<RegisterResponse>) {
     res.locals.routeName = ROUTE_NAME.AUTH.REGISTER;
     try {
       const data = await AuthService.register(req.body);

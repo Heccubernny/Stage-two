@@ -1,4 +1,4 @@
-import { dbConfig } from 'data-source';
+import { dbConfig } from 'data_source';
 import { DataSource } from 'typeorm';
 export const testDataSource = new DataSource(dbConfig as any);
 

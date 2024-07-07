@@ -1,5 +1,5 @@
 import { validate } from 'class-validator';
-import { AppDataSource } from '../data-source';
+import { AppDataSource } from '../data_source';
 import { Organisation } from '../entities/Organisation';
 import { User } from '../entities/User';
 

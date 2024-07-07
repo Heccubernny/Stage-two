@@ -1,3 +1,4 @@
+import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import bodyParser from 'body-parser';
 import express from 'express';
 import request from 'supertest';
@@ -6,7 +7,6 @@ import authRoutes from '../src/routes/auth';
 import organisationRoutes from '../src/routes/organisation';
 import userRoutes from '../src/routes/user';
 import { cleanupDatabase } from '../src/utils/test';
-
 const app = express();
 app.use(bodyParser.json());
 app.use('/auth', authRoutes);

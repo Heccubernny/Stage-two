@@ -1,12 +1,14 @@
 import bcrypt from 'bcryptjs';
 import { validate } from 'class-validator';
 import dotenv from 'dotenv';
+import { response } from 'express';
 import jwt from 'jsonwebtoken';
-import { AppDataSource } from '../data-source';
+import { AppDataSource } from '../data_source';
 import { Organisation } from '../entities/Organisation';
 import { User } from '../entities/User';
 import { CustomValidationException } from '../utils/common/exception';
 import { ERROR_MESSAGE } from '../utils/constant';
+import { ResponseHandler } from '../utils/response';
 dotenv.config();
 type RegistrationType = {
   firstName: string;
@@ -35,7 +37,12 @@ export class AuthService {
 
     const doesEmailExist = await userRespository.exists({ where: { email } });
     if (doesEmailExist) {
-      throw new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR);
+      ResponseHandler.error(
+        response,
+        ERROR_MESSAGE.AUTH.REGISTRATION_ERROR,
+        401
+      );
+      // throw new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR);
     }
 
     const hashPassword = bcrypt.hashSync(password, saltLength);
