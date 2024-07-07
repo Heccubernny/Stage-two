@@ -28,7 +28,10 @@ export class AuthController {
         res,
         error instanceof Error
           ? error.message
-          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN)
+          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN),
+        401,
+        'Bad Request',
+        res.locals.routeName
       );
     }
   }
@@ -49,7 +52,10 @@ export class AuthController {
         res,
         error instanceof Error
           ? error.message
-          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN)
+          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN),
+        401,
+        'Bad Request',
+        res.locals.routeName
       );
     }
   }
