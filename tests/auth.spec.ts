@@ -77,14 +77,14 @@ describe('Authentication Endpoints', () => {
     });
 
     expect(response.statusCode).toBe(422);
-    //   // expect(response.body.errors).toEqual(
-    //   //   expect.arrayContaining([
-    //   //     expect.objectContaining({
-    //   //       field: 'email',
-    //   //       message: expect.any(String),
-    //   //     }),
-    //   //   ])
-    //   // );
+    // expect(response.body.errors).toEqual(
+    //   expect.arrayContaining([
+    //     expect.objectContaining({
+    //       field: 'email',
+    //       message: expect.any(String),
+    //     }),
+    //   ])
+    // );
   });
 });
 
