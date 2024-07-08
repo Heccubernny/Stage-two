@@ -1,5 +1,5 @@
-import { afterAll, beforeAll, describe } from '@jest/globals';
 // expect, it
+import { afterAll, beforeAll, describe, expect, it } from '@jest/globals';
 import jwt from 'jsonwebtoken';
 import request from 'supertest';
 import app from '../app';
@@ -12,63 +12,62 @@ const isTokenExpired = (token: string) => {
 };
 
 describe('Authentication Endpoints', () => {
-  let server;
   let accessToken;
   beforeAll(async () => {
     await AppDataSource.initialize();
 
-    server = await app;
-
-    const res = await request(server).post('/auth/register').send({});
-    // console.log(res.body);
-    accessToken = res.body.data.accessToken;
+    // const response = await request(app).post('/auth/register').send({});
+    // console.log(response.body);
+    // accessToken = response.body.data.accessToken;
   }, 30000);
 
   afterAll(async () => {
-    if (AppDataSource.isInitialized) {
-      try {
-        await AppDataSource.destroy();
-      } catch (error) {
-        console.error('Error during data source destruction:', error);
-      }
-    }
+    await AppDataSource.destroy();
+
+    // if (AppDataSource.isInitialized) {
+    //   try {
+    //     await AppDataSource.destroy();
+    //   } catch (error) {
+    //     console.error('Error during data source destruction:', error);
+    //   }
+    // }
   }, 30000);
 
-  //   describe('POST /auth/register', () => {
-  //     it('should register a user successfully with default organisation', async () => {
-  //       const res = await request(app).post('/auth/register').send({
-  //         firstName: 'John',
-  //         lastName: 'Doe',
-  //         email: 'john.doe212@mail.com',
-  //         password: 'password123',
-  //         phone: '1234567890',
-  //       });
+  it('should register a user successfully with default organisation', async () => {
+    const response = await request(app).post('/auth/register').send({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'johnoe2212@fmail.com',
+      password: 'password123',
+      phone: '1234567890',
+    });
+    console.log(response.body);
 
-  //       expect(res.status).toBe(201);
-  //       expect(res.body.status).toBe('success');
-  //       expect(res.body.data.user.firstName).toBe('John');
-  //       expect(res.body.data.user.email).toBe('john.doe@mail.com');
-  //       expect(res.body.data.user).toHaveProperty('userId');
-  //       expect(res.body.data).toHaveProperty('accessToken');
-  //       expect(isTokenExpired(res.body.data.accessToken)).toBe(false);
+    expect(response.statusCode).toBe(201);
+    expect(response.body.status).toBe('success');
+    expect(response.body.data.user.firstName).toBe('John');
+    expect(response.body.data.user.email).toBe('john.doe@mail.com');
+    expect(response.body.data.user).toHaveProperty('userId');
+    expect(response.body.data).toHaveProperty('accessToken');
+    expect(isTokenExpired(response.body.data.accessToken)).toBe(false);
 
-  //       // Verify default organisation
-  //       const orgRepo = AppDataSource.getRepository(Organisation);
-  //       const organisation = await orgRepo.findOne({
-  //         where: { name: "John's Organisation" },
-  //       });
-  //       expect(organisation).not.toBeNull();
-  //     });
+    //       // Verify default organisation
+    // const orgRepo = AppDataSource.getRepository(Organisation);
+    // const organisation = await orgRepo.findOne({
+    //   where: { name: "John's Organisation" },
+    // });
+    // expect(organisation).not.toBeNull();
+  });
 
   //     it('should fail if required fields are missing', async () => {
-  //       const res = await request(app).post('/auth/register').send({
+  //       const response = await request(app).post('/auth/register').send({
   //         firstName: 'John',
   //         email: 'john.doe212@mail.com',
   //         password: 'password123',
   //       });
 
-  //       expect(res.statusCode).toBe(422);
-  //       expect(res.body.errors).toEqual(
+  //       expect(response.statusCode).toBe(422);
+  //       expect(response.body.errors).toEqual(
   //         expect.arrayContaining([
   //           expect.objectContaining({
   //             field: 'lastName',
@@ -87,7 +86,7 @@ describe('Authentication Endpoints', () => {
   //         phone: '1234567890',
   //       });
 
-  //       const res = await request(app).post('/auth/register').send({
+  //       const response = await request(app).post('/auth/register').send({
   //         firstName: 'John',
   //         lastName: 'Doe',
   //         email: 'jane.doe212@mail.com',
@@ -95,8 +94,8 @@ describe('Authentication Endpoints', () => {
   //         phone: '0987654321',
   //       });
 
-  //       expect(res.status).toBe(422);
-  //       expect(res.body.errors).toEqual(
+  //       expect(response.status).toBe(422);
+  //       expect(response.body.errors).toEqual(
   //         expect.arrayContaining([
   //           expect.objectContaining({
   //             field: 'email',
@@ -117,28 +116,28 @@ describe('Authentication Endpoints', () => {
   //         phone: '1234567890',
   //       });
 
-  //       const res = await request(app).post('/auth/login').send({
+  //       const response = await request(app).post('/auth/login').send({
   //         email: 'alice.smith1@mail.com',
   //         password: 'password123',
   //       });
 
-  //       expect(res.status).toBe(200);
-  //       expect(res.body.status).toBe('success');
-  //       expect(res.body.data.user.email).toBe('alice.smith@mail.com');
-  //       expect(res.body.data).toHaveProperty('accessToken');
+  //       expect(response.status).toBe(200);
+  //       expect(response.body.status).toBe('success');
+  //       expect(response.body.data.user.email).toBe('alice.smith@mail.com');
+  //       expect(response.body.data).toHaveProperty('accessToken');
   //       // check if token generation expired
-  //       expect(isTokenExpired(res.body.data.accessToken)).toBe(false);
+  //       expect(isTokenExpired(response.body.data.accessToken)).toBe(false);
   //     });
 
   //     it('should fail if login credentials are incorrect', async () => {
-  //       const res = await request(app).post('/auth/login').send({
+  //       const response = await request(app).post('/auth/login').send({
   //         email: 'wrong.email@mail.com',
   //         password: 'wrongpassword',
   //       });
 
-  //       expect(res.status).toBe(401);
-  //       expect(res.body.status).toBe('Bad request');
-  //       expect(res.body.message).toBe('Authentication failed');
+  //       expect(response.status).toBe(401);
+  //       expect(response.body.status).toBe('Bad request');
+  //       expect(response.body.message).toBe('Authentication failed');
   //     });
   //   });
   // });
@@ -148,7 +147,7 @@ describe('Authentication Endpoints', () => {
 
   //   beforeAll(async () => {
   //     // Register a user and obtain a token
-  //     const res = await request(app).post('/auth/register').send({
+  //     const response = await request(app).post('/auth/register').send({
   //       firstName: 'Bob',
   //       lastName: 'Builder',
   //       email: 'bob.builder12@mail.com',
@@ -156,7 +155,7 @@ describe('Authentication Endpoints', () => {
   //       phone: '1234567890',
   //     });
 
-  //     accessToken = res.body.data.accessToken;
+  //     accessToken = response.body.data.accessToken;
   //   });
 
   //   it('should not allow access to organisations the user does not belong to', async () => {
@@ -172,11 +171,10 @@ describe('Authentication Endpoints', () => {
   //     const otherOrgId = res2.body.data.organisation.orgId;
 
   //     // Attempt to access the other user's organisation
-  //     const res = await request(app)
+  //     const response = await request(app)
   //       .get(`/api/organisations/${otherOrgId}`)
   //       .set('Authorization', `Bearer ${accessToken}`);
 
-  //     expect(res.status).toBe(403);
-  //     expect(res.body.message).toBe('Forbidden');
-  //   });
+  //     expect(response.status).toBe(403);
+  //     expect(response.body.message).toBe('Forbidden');
 });

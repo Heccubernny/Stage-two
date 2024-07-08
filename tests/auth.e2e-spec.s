@@ -28,7 +28,7 @@ describe('User Registration', () => {
       email: 'john22@example.com',
       phone: '1234567890',
     });
-    expect(response.body.data.token).toBeDefined();
+    expect(response.body.data.accessToken).toBeDefined();
   });
 
   it('Should fail if required fields are missing', async () => {
