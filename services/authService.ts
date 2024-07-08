@@ -36,7 +36,6 @@ export class AuthService {
     const saltLength = 10;
 
     const doesEmailExist = await userRespository.exists({ where: { email } });
-    console.log({ oo: doesEmailExist });
     if (doesEmailExist) {
       ResponseHandler.error(
         response,
