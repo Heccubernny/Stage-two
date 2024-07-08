@@ -24,13 +24,13 @@ export class AuthController {
       if (error instanceof CustomValidationException) {
         return error.handle(res);
       }
-      ResponseHandler.error(
-        res,
-        new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR),
-        HttpStatusCodes.BAD_REQUEST,
-        'Bad request',
-        res.locals.routeName
-      );
+      // ResponseHandler.error(
+      //   res,
+      //   new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR),
+      //   HttpStatusCodes.BAD_REQUEST,
+      //   'Bad request',
+      //   res.locals.routeName
+      // );
     }
   }
   static async login(req: Request, res: Response) {
