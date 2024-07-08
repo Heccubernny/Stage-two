@@ -55,10 +55,8 @@ export class OrganisationController {
     } catch (error) {
       ResponseHandler.error(
         res,
-        error instanceof Error
-          ? error.message
-          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN),
-        HttpStatusCodes.INTERNAL_SERVER_ERROR
+        new Error(ERROR_MESSAGE.ORG.CLIENT_ERROR),
+        HttpStatusCodes.BAD_REQUEST
       );
     }
   }

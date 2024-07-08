@@ -15,7 +15,7 @@ describe('User Registration', () => {
     const response = await request(app).post('/auth/register').send({
       firstName: 'John',
       lastName: 'Doe',
-      email: 'john22@example.com',
+      email: 'wewe11222@example.com',
       password: 'Password123!',
       phone: '1234567890',
     });
@@ -25,7 +25,7 @@ describe('User Registration', () => {
     expect(response.body.data.user).toMatchObject({
       firstName: 'John',
       lastName: 'Doe',
-      email: 'john22@example.com',
+      email: 'wewe11222@example.com',
       phone: '1234567890',
     });
     expect(response.body.data.accessToken).toBeDefined();
@@ -34,12 +34,16 @@ describe('User Registration', () => {
   it('Should fail if required fields are missing', async () => {
     const routeName = 'register';
     const response = await request(app).post('/auth/register').send({
-      email: 'test@example.com',
+      firstName: 'erer',
+      email: 're21@mail.com',
+      password: 'Madefromblack',
+      phone: '09023412322',
     });
 
     expect('/auth/register').toBe('/auth/register');
+    console.log(response);
 
-    expect(response.statusCode).toBe(422);
+    expect(response.body.statusCode).toBe(422);
     expect(response.body.errors).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
@@ -52,12 +56,12 @@ describe('User Registration', () => {
 
   it('Should fail if email is duplicate', async () => {
     await request(app).post('/auth/register').send({
-      email: 'duplicate@example.com',
+      email: 'duplicate11@example.com',
       password: 'password123',
       name: 'Duplicate User',
     });
     const response = await request(app).post('/auth/register').send({
-      email: 'duplicate@example.com',
+      email: 'duplicate11@example.com',
       password: 'password123',
       name: 'Duplicate User',
     });

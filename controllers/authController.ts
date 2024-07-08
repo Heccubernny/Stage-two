@@ -26,16 +26,13 @@ export class AuthController {
       }
       ResponseHandler.error(
         res,
-        error instanceof Error
-          ? error.message
-          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN),
-        401,
-        'Bad Request',
+        new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR),
+        HttpStatusCodes.BAD_REQUEST,
+        'Bad request',
         res.locals.routeName
       );
     }
   }
-
   static async login(req: Request, res: Response) {
     res.locals.routeName = ROUTE_NAME.AUTH.LOGIN;
 
@@ -45,16 +42,14 @@ export class AuthController {
         res,
         SUCCESS_RESPONSE_CONSTANT.AUTH.LOGIN_SUCCESS,
         data,
-        HttpStatusCodes.CREATED
+        HttpStatusCodes.OK
       );
     } catch (error) {
       ResponseHandler.error(
         res,
-        error instanceof Error
-          ? error.message
-          : new Error(ERROR_MESSAGE.DEFAULT_ERROR.UNKNOWN),
+        new Error(ERROR_MESSAGE.AUTH.LOGIN_ERROR),
         401,
-        'Bad Request',
+        'Bad request',
         res.locals.routeName
       );
     }

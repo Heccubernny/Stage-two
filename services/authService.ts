@@ -36,17 +36,18 @@ export class AuthService {
     const saltLength = 10;
 
     const doesEmailExist = await userRespository.exists({ where: { email } });
+    console.log({ oo: doesEmailExist });
     if (doesEmailExist) {
       ResponseHandler.error(
         response,
         ERROR_MESSAGE.AUTH.REGISTRATION_ERROR,
-        401
+        422
       );
-      // throw new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR);
     }
 
     const hashPassword = bcrypt.hashSync(password, saltLength);
     let user = new User();
+
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;

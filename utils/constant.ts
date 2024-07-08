@@ -26,17 +26,19 @@ export const ROUTE_NAME = {
 
 export const ERROR_MESSAGE = {
   AUTH: {
-    REGISTRATION_ERROR: 'Registration failed',
+    REGISTRATION_ERROR: 'Registration unsuccessful',
     LOGIN_ERROR: 'Authentication failed',
   },
   ORG: {
     CREATE_ERROR: 'Failed to create organisation',
     ADD_USER_ERROR: 'Failed to add user to organisation',
     NOT_FOUND: 'Organisation not found',
+    CLIENT_ERROR: 'Client error',
   },
   DEFAULT_ERROR: {
     UNKNOWN: 'An unknown error occurred',
     FORBIDDEN: 'Forbidden',
     INTERNAL: 'Internal server error',
+    BAD_REQUEST: 'Bad Request',
   },
 };

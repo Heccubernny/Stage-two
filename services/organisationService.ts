@@ -56,13 +56,11 @@ export class OrganisationService {
       throw new Error('Organisation or User not found');
     }
 
-    console.log({ organisation, user });
 
     if (!organisation.users) {
       organisation.users = [];
     }
     organisation.users.push(user);
-    console.log({ organisation, user });
 
     return organisationRespository.save(organisation);
   }
