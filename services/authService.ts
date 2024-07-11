@@ -46,8 +46,8 @@ export class AuthService {
     }
 
     const hashPassword = bcrypt.hashSync(password, saltLength);
-    let user = new User();
 
+    let user = new User();
     user.firstName = firstName;
     user.lastName = lastName;
     user.email = email;
@@ -64,6 +64,7 @@ export class AuthService {
     let organisation = new Organisation();
     organisation.name = `${firstName}'s Organisation`;
     organisation.users = [user];
+
     await organisationRespository.save(organisation);
 
     const accessToken = jwt.sign(
