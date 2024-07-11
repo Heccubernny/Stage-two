@@ -2,7 +2,7 @@ import { Response } from 'express';
 import { ERROR_MESSAGE } from './constant';
 
 export class ResponseHandler {
-  static success(res: Response, message: string, data: any, statusCode = 200) {
+  static success(res: Response, message: string, data?: any, statusCode = 200) {
     res.status(statusCode).json({
       status: 'success',
       message,
@@ -14,7 +14,7 @@ export class ResponseHandler {
     res: Response,
     message: string | unknown | Error,
     statusCode = 401,
-    status: string = 'Bad Request',
+    status: string = 'Bad request',
     routeName: string = ''
   ) {
     let errorMessage = message instanceof Error ? message.message : message;

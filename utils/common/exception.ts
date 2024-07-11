@@ -15,12 +15,12 @@ export class CustomValidationException extends Error {
 
   handle(res: Response) {
     res.status(this.statusCode).json({
-      status: 'Bad Request',
+      // status: 'Bad Request',
       statusCode: this.statusCode,
       errors: this.errors,
-      message: this.errors
-        .map((err) => `${err.field}: ${err.message}`)
-        .join(', '),
+      // message: this.errors
+      // .map((err) => `${err.field}: ${err.message}`)
+      // .join(', '),
     });
   }
 }

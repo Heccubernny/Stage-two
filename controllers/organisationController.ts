@@ -100,8 +100,7 @@ export class OrganisationController {
       await OrganisationService.addUserToOrganisation(orgId, userId);
       ResponseHandler.success(
         res,
-        SUCCESS_RESPONSE_CONSTANT.ORG.ADD_USER_SUCCESS,
-        []
+        SUCCESS_RESPONSE_CONSTANT.ORG.ADD_USER_SUCCESS
       );
     } catch (error) {
       ResponseHandler.error(
