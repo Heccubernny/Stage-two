@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import HttpStatusCodes from 'http-status-codes';
-import { RegisterResponse } from '../interfaces/registerInterface';
 import { AuthService } from '../services/authService';
 import { CustomValidationException } from '../utils/common/exception';
 import {
@@ -10,7 +9,7 @@ import {
 } from '../utils/constant';
 import { ResponseHandler } from '../utils/response';
 export class AuthController {
-  static async register(req: Request, res: Response<RegisterResponse>) {
+  static async register(req: Request, res: Response) {
     res.locals.routeName = ROUTE_NAME.AUTH.REGISTER;
     try {
       const data = await AuthService.register(req.body);
@@ -23,14 +22,15 @@ export class AuthController {
     } catch (error: unknown) {
       if (error instanceof CustomValidationException) {
         return error.handle(res);
+      } else {
+        ResponseHandler.error(
+          res,
+          new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR),
+          HttpStatusCodes.BAD_REQUEST,
+          'Bad request',
+          res.locals.routeName
+        );
       }
-      ResponseHandler.error(
-        res,
-        new Error(ERROR_MESSAGE.AUTH.REGISTRATION_ERROR),
-        HttpStatusCodes.BAD_REQUEST,
-        'Bad request',
-        res.locals.routeName
-      );
     }
   }
   static async login(req: Request, res: Response) {
