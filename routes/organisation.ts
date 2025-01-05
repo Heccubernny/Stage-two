@@ -1,18 +1,18 @@
-import { Router } from 'express';
-import { OrganisationController } from '../controllers/organisationController';
-import AuthMiddleware from '../middleware/auth';
+import { Router } from "express";
+import { OrganisationController } from "../controllers/organisationController";
+import AuthMiddleware from "../middleware/auth";
 
 const router = Router();
 
-router.get('/', AuthMiddleware.authenticateJWT, OrganisationController.getAll);
+router.get("/", OrganisationController.getAll);
 router.get(
-  '/:orgId',
+  "/:orgId",
   AuthMiddleware.authenticateJWT,
   OrganisationController.getOne
 );
-router.post('/', AuthMiddleware.authenticateJWT, OrganisationController.create);
+router.post("/", AuthMiddleware.authenticateJWT, OrganisationController.create);
 router.post(
-  '/:orgId/users',
+  "/:orgId/users",
   AuthMiddleware.authenticateJWT,
   OrganisationController.addUser
 );

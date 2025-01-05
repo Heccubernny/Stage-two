@@ -1,17 +1,18 @@
-import { Request, Response } from 'express';
-import HttpStatusCodes from 'http-status-codes';
-import { CustomRequest } from '../interfaces/authInterface';
-import { OrganisationService } from '../services/organisationService';
-import { ERROR_MESSAGE, SUCCESS_RESPONSE_CONSTANT } from '../utils/constant';
-import { ResponseHandler } from '../utils/response';
+import { Request, Response } from "express";
+import HttpStatusCodes from "http-status-codes";
+import { CustomRequest } from "../interfaces/authInterface";
+import { OrganisationService } from "../services/organisationService";
+import { ERROR_MESSAGE, SUCCESS_RESPONSE_CONSTANT } from "../utils/constant";
+import { ResponseHandler } from "../utils/response";
 
 export class OrganisationController {
   static async getAll(req: CustomRequest, res: Response) {
     try {
-      const userId = req.user.userId;
-      const organisations = await OrganisationService.getAllOrganisations(
-        userId
-      );
+      // const userId = req.user.userId;
+      const organisations = await OrganisationService
+        .getAllOrganisations
+        // userId
+        ();
       ResponseHandler.success(
         res,
         SUCCESS_RESPONSE_CONSTANT.ORG.RETREIVE_SUCCESS,

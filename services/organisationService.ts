@@ -1,26 +1,28 @@
-import { validate } from 'class-validator';
-import { AppDataSource } from '../data_source';
-import { Organisation } from '../entities/Organisation';
-import { User } from '../entities/User';
+import { validate } from "class-validator";
+import { AppDataSource } from "../data_source";
+import { Organisation } from "../entities/Organisation";
+import { User } from "../entities/User";
 
 export class OrganisationService {
-  static async getAllOrganisations(userId: string) {
+  static async getAllOrganisations(userId?: string) {
     const organisationRepository = AppDataSource.getRepository(Organisation);
-    return organisationRepository
-      .createQueryBuilder('organisation')
-      .innerJoin('organisation.users', 'user', 'user.userId = :userId', {
-        userId,
-      })
-      .getMany();
+    return (
+      organisationRepository
+        .createQueryBuilder("organisation")
+        // .innerJoin('organisation.users', 'user', 'user.userId = :userId', {
+        //   userId,
+        // })
+        .getMany()
+    );
   }
 
   static async getOneOrganisation(orgId: string, userId: string) {
     return AppDataSource.getRepository(Organisation)
-      .createQueryBuilder('organisation')
-      .innerJoin('organisation.users', 'user', 'user.userId = :userId', {
+      .createQueryBuilder("organisation")
+      .innerJoin("organisation.users", "user", "user.userId = :userId", {
         userId,
       })
-      .where('organisation.orgId = :orgId', { orgId })
+      .where("organisation.orgId = :orgId", { orgId })
       .getOne();
   }
 
@@ -40,7 +42,7 @@ export class OrganisationService {
 
     const errors = await validate(organisation);
     if (errors.length > 0) {
-      throw new Error(' Client error');
+      throw new Error(" Client error");
     }
 
     return organisationRepository.save(organisation);
@@ -53,9 +55,8 @@ export class OrganisationService {
     const user = await userRespository.findOneBy({ userId });
 
     if (!organisation || !user) {
-      throw new Error('Organisation or User not found');
+      throw new Error("Organisation or User not found");
     }
-
 
     if (!organisation.users) {
       organisation.users = [];
