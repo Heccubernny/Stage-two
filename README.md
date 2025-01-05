@@ -1,8 +1,8 @@
-# ExpressJS Project - HNG Stage Two Task Backend
+# ExpressJS Project - APP_ Stage Two Task Backend
 
 ## Overview
 
-This project is part of the HNG Internship, focusing on user authentication and organization management using Express.js, and TypeORM. The project implements various endpoints to handle user registration, login, and organization management, adhering to the provided acceptance criteria.
+This project is part of the APP_ Internship, focusing on user authentication and organization management using Express.js, and TypeORM. The project implements various endpoints to handle user registration, login, and organization management, adhering to the provided acceptance criteria.
 
 ## Features
 

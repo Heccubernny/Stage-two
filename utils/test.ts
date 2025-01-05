@@ -1,5 +1,5 @@
-import { DataSource } from 'typeorm';
-import { dbConfig } from '../../data_source';
+import { DataSource } from "typeorm";
+import { dbConfig } from "../data_source";
 export const testDataSource = new DataSource(dbConfig as any);
 
 export const initializeTestDataSource = async () => {

@@ -11,20 +11,20 @@ class AuthMiddleware {
     next: NextFunction
   ) {
     const authHeader = req.headers.authorization;
-    if (authHeader) {
-      const token = authHeader.split(' ')[1];
-      if (!token) {
-        return res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+    if ( authHeader ) {
+      const token = authHeader.split( ' ' )[ 1 ];
+      if ( !token ) {
+        return res.sendStatus( HttpStatusCodes.UNAUTHORIZED );
       }
-      jwt.verify(token, process.env.HNG_JWT_SECRET!, (err, user) => {
-        if (err) {
-          return res.sendStatus(HttpStatusCodes.FORBIDDEN);
+      jwt.verify( token, process.env.APP_JWT_SECRET!, ( err, user ) => {
+        if ( err ) {
+          return res.sendStatus( HttpStatusCodes.FORBIDDEN );
         }
         req.user = user;
         next();
-      });
+      } );
     } else {
-      res.sendStatus(HttpStatusCodes.UNAUTHORIZED);
+      res.sendStatus( HttpStatusCodes.UNAUTHORIZED );
     }
   }
 }

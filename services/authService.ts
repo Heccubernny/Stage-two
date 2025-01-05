@@ -1,14 +1,14 @@
-import bcrypt from 'bcryptjs';
-import { validate } from 'class-validator';
-import dotenv from 'dotenv';
-import { response } from 'express';
-import jwt from 'jsonwebtoken';
-import { AppDataSource } from '../data_source';
-import { Organisation } from '../entities/Organisation';
-import { User } from '../entities/User';
-import { CustomValidationException } from '../utils/common/exception';
-import { ERROR_MESSAGE } from '../utils/constant';
-import { ResponseHandler } from '../utils/response';
+import bcrypt from "bcryptjs";
+import { validate } from "class-validator";
+import dotenv from "dotenv";
+import { response } from "express";
+import jwt from "jsonwebtoken";
+import { AppDataSource } from "../data_source";
+import { Organisation } from "../entities/Organisation";
+import { User } from "../entities/User";
+import { CustomValidationException } from "../utils/common/exception";
+import { ERROR_MESSAGE } from "../utils/constant";
+import { ResponseHandler } from "../utils/response";
 dotenv.config();
 type RegistrationType = {
   firstName: string;
@@ -37,6 +37,8 @@ export class AuthService {
 
     const doesEmailExist = await userRespository.exists({ where: { email } });
 
+    console.log("doesemailexit ", doesEmailExist);
+
     if (doesEmailExist) {
       ResponseHandler.error(
         response,
@@ -55,6 +57,7 @@ export class AuthService {
     user.phone = phone;
 
     const errors = await validate(user);
+    console.log(errors);
     if (errors.length > 0) {
       throw new CustomValidationException(errors);
     }
@@ -64,12 +67,12 @@ export class AuthService {
     let organisation = new Organisation();
     organisation.name = `${firstName}'s Organisation`;
     organisation.users = [user];
-
+    console.log({ organisation, user });
     await organisationRespository.save(organisation);
 
     const accessToken = jwt.sign(
       { userId: user.userId },
-      process.env.HNG_JWT_SECRET!,
+      process.env.APP_JWT_SECRET!,
       { expiresIn: process.env.EXPIRES_IN }
     );
 
@@ -88,7 +91,6 @@ export class AuthService {
   static async login({ email, password }: LoginType) {
     const userRespository = AppDataSource.getRepository(User);
     const user: User | null = await userRespository.findOneBy({ email });
-
     if (!user) {
       throw new Error(ERROR_MESSAGE.AUTH.LOGIN_ERROR);
     }
@@ -100,7 +102,7 @@ export class AuthService {
 
     const accessToken = jwt.sign(
       { userId: user.userId },
-      process.env.HNG_JWT_SECRET!,
+      process.env.APP_JWT_SECRET!,
       {
         expiresIn: process.env.EXPIRES_IN,
       }
